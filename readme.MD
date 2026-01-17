@@ -177,6 +177,16 @@ Une extension naturelle du projet consiste à aligner les **images RGB** et les 
 * le GNN produit des embeddings spatiaux à partir des graphes,
 * des têtes de projection alignent les deux modalités via une perte contrastive.
 
+<p align="center">
+  <img src="figures/architecture_alignement.png" width="650">
+</p>
+
+<p align="center">
+  <em>
+  Architecture de l'alignement multimodal entre image RGB et représentation de graphe.
+  </em>
+</p>
+
 ### Intérêt
 
 * le graphe agit comme une **supervision spatiale structurée**,
