@@ -87,3 +87,159 @@ Les représentations apprises peuvent être exploitées :
   </em>
 </p>
 
+---
+
+## Évaluation par prédiction de relations
+
+Une première évaluation est menée via une tâche de **prédiction de relations** à l’aide d’un classifieur linéaire entraîné sur des embeddings figés (linear probing).
+
+### Observations principales
+
+* bonnes performances sur les relations spatiales fréquentes (*on*, *over*, *beside*),
+* performances faibles sur les relations rares ou sémantiques,
+* forte dégradation liée au déséquilibre des classes.
+
+Les **matrices de confusion** montrent des confusions structurées entre relations géométriquement proches (par exemple *standing on* confondu avec *on*), ce qui est cohérent avec la nature directionnelle des bandeaux de force.
+
+<p align="center">
+  <img src="figures/confusion_matrix.png" width="650">
+</p>
+
+<p align="center">
+  <em>
+  Matrice de confusion, Top-10 relations
+  </em>
+</p>
+
+<p align="center">
+  <img src="figures/predictions.png" width="650">
+</p>
+
+<p align="center">
+  <em>
+  Exemples de prédiction de relations.
+  </em>
+</p>
+
+
+
+### Limites de cette évaluation
+
+* déséquilibre extrême des classes,
+* annotations souvent peu adaptées à une modélisation purement spatiale,
+* métriques quantitatives peu représentatives de l’objectif réel du projet.
+
+
+---
+
+## Visualisation des embeddings (t-SNE)
+
+Des visualisations par **t-SNE** sont réalisées afin d’analyser la structure de l’espace latent :
+
+* après l’encodage par le GNN seul,
+* après l’alignement multimodal image–graphe.
+
+Les visualisations montrent :
+
+* un regroupement progressif des scènes selon leur configuration spatiale,
+* une meilleure structuration après apprentissage contrastif,
+* un alignement plus cohérent après intégration de la modalité image.
+
+---
+
+## Alignement multimodal image RGB ↔ graphe de scène
+
+Une extension naturelle du projet consiste à aligner les **images RGB** et les **embeddings de graphes de scène** dans un espace latent commun.
+
+### Principe
+
+* un encodeur image (CNN) produit des embeddings visuels,
+* le GNN produit des embeddings spatiaux à partir des graphes,
+* des têtes de projection alignent les deux modalités via une perte contrastive.
+
+### Intérêt
+
+* le graphe agit comme une **supervision spatiale structurée**,
+* l’espace latent est organisé selon des critères géométriques,
+* l’inférence peut être réalisée à partir d’une **simple image RGB**,
+* la tâche de retrieval ne nécessite aucun label relationnel.
+
+---
+
+## Évaluation par retrieval (approche privilégiée)
+
+Une évaluation qualitative par **retrieval** est proposée, plus alignée avec l’objectif de structuration de l’espace latent.
+
+### Principe
+
+* les embeddings appris sont utilisés pour rechercher des scènes spatialement similaires,
+* comparaison avec une baseline purement visuelle basée sur un **encodeur ResNet pré-entraîné**.
+
+### Résultats qualitatifs
+
+<p align="center">
+  <img src="figures/resnet_retrieval.png" width="650">
+</p>
+
+<p align="center">
+  <em>
+  Exemples retrieval avec ResNet seul.
+  </em>
+</p>
+
+<p align="center">
+  <img src="figures/aligned_retrieval.png" width="650">
+</p>
+
+<p align="center">
+  <em>
+  Exemples retrieval avec modèle aligné.
+  </em>
+</p>
+
+* la baseline CNN privilégie des similarités d’apparence globale,
+* l’approche proposée favorise une **cohérence spatiale entre objets**,
+* les scènes retournées présentent des configurations spatiales similaires, même lorsque l’apparence visuelle diffère.
+
+Cette tâche ne nécessite pas de labels relationnels explicites et constitue une évaluation plus fidèle de la qualité des représentations spatiales.
+
+<p align="center">
+  <img src="figures/compare_resnet_aligned.png" width="650">
+</p>
+
+<p align="center">
+  <em>
+  Comparaison d'un retrieval avec la même query : ResNet seul vs Modèle aligné
+  </em>
+</p>
+
+## Limites et critiques
+
+La limite principale du projet réside dans le dataset **PSG** :
+
+* bien que riche et structuré, il contient majoritairement des relations d’action,
+* les bandeaux de force capturent des relations directionnelles, mais **prédire une action à partir d’un descripteur spatial n’a pas de sens**.
+
+L’évaluation quantitative reste également difficile :
+
+* la prédiction de relations est pénalisée par le déséquilibre,
+* le retrieval nécessite de définir une notion de similarité entre graphes complexes.
+
+Les baselines visuelles (CNN) capturent principalement des **corrélations statistiques** et des signatures visuelles, donnant parfois une cohérence spatiale apparente sans réelle compréhension de la spatialité.
+
+---
+
+## Conclusion et perspectives
+
+Les résultats qualitatifs suggèrent que :
+
+* la spatialité des scènes est correctement capturée,
+* l’apprentissage contrastif sur graphes est une **stratégie pertinente et prometteuse** pour la modélisation des relations spatiales.
+
+Une perspective majeure serait l’utilisation d’un dataset combinant :
+
+* des relations spatiales directionnelles explicites (type Visual Genome),
+* des masques panoptiques,
+* des graphes de scène cohérents.
+
+Un tel dataset permettrait probablement d’obtenir de meilleurs résultats quantitatifs et constitue une piste de recherche importante pour la suite.
