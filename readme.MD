@@ -139,6 +139,26 @@ Des visualisations par **t-SNE** sont réalisées afin d’analyser la structure
 * après l’encodage par le GNN seul,
 * après l’alignement multimodal image–graphe.
 
+<p align="center">
+  <img src="figures/tsne_gnn.png" width="650">
+</p>
+
+<p align="center">
+  <em>
+  Visualisation t-SNE des embeddings extraits par l'apprentissage contrastif sur le GNN.
+  </em>
+</p>
+
+<p align="center">
+  <img src="figures/tsne_align.png" width="650">
+</p>
+
+<p align="center">
+  <em>
+  Visualisation t-SNE des embeddings extraits par l'alignement multimodal.
+  </em>
+</p>
+
 Les visualisations montrent :
 
 * un regroupement progressif des scènes selon leur configuration spatiale,
