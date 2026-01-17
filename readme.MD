@@ -54,7 +54,7 @@ Chaque image est transformée en un **graphe de scène** combinant des descripte
 ### Arêtes
 
 * Les arêtes correspondent aux relations spatiales entre paires d’objets.
-* Elles sont décrites à l’aide de **bandeaux de force** (Relative Position Descriptors, RPD), qui encodent des **relations directionnelles et spatiales continues**.
+* Elles sont décrites à l’aide de **bandeaux de force** (Relative Position Descriptors, RPD), ([Deléarde et al., 2021](https://u-paris.hal.science/hal-03409527/document)) qui encodent des **relations directionnelles et spatiales continues**.
 
 Cette représentation permet de séparer explicitement :
 
