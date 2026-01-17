@@ -14,6 +14,7 @@ Chaque scène est modélisée comme un graphe :
 
 Nous adoptons une approche **auto-supervisée** basée sur l’**apprentissage contrastif sur graphes (Graph Contrastive Learning, GraphCL)**.
 
+**Encadrants :** Camille Kurtz, Laurent Wendling, Logan Servant
 ---
 
 ## Données utilisées
