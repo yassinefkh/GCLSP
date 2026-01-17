@@ -1,4 +1,4 @@
-# Apprentissage de représentations spatiales de scènes par apprentissage contrastif sur graphes
+# Graph Contrastive Learning for Spatial Relations
 
 ## Présentation du projet
 
