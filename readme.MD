@@ -20,7 +20,7 @@ Nous adoptons une approche **auto-supervisée** basée sur l’**apprentissage c
 
 ## Données utilisées
 
-Le projet repose sur le dataset **Panoptic Scene Graph (PSG)**, qui fournit :
+Le projet repose sur le dataset **Panoptic Scene Graph (PSG)** ([Yang et al., 2022](https://github.com/Jingkang50/OpenPSG)), qui fournit :
 
 * des images naturelles issues de COCO,
 * des masques de segmentation panoptiques,
