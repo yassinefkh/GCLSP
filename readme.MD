@@ -273,3 +273,6 @@ Une perspective majeure serait l’utilisation d’un dataset combinant :
 * des graphes de scène cohérents.
 
 Un tel dataset permettrait probablement d’obtenir de meilleurs résultats quantitatifs et constitue une piste de recherche importante pour la suite.
+
+
+<em> De manière plus générale, ce travail m’a conduit à considérer que les modèles neuronaux destinés à la compréhension de scènes visuelles doivent nécessairement intégrer une prise en compte explicite de la spatialité. Si les mécanismes d’attention et les architectures convolutionnelles ont permis des avancées majeures, ces mécanismes restent souvent limités à une modélisation implicite des relations spatiales, fondée sur des corrélations visuelles. Une compréhension plus fine de la spatialité semble nécessiter l’intégration de modules de raisonnement spatial dédiés, capables de manipuler des relations géométriques et directionnelles explicites, par exemple à partir de descripteurs de positions relatives. L’enjeu n’est pas d’opposer sémantique visuelle et raisonnement spatial, mais de les combiner de manière complémentaire afin de construire des représentations plus robustes et plus interprétables des scènes visuelles. <em>
