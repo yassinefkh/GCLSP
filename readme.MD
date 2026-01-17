@@ -91,6 +91,64 @@ Les représentations apprises peuvent être exploitées :
 
 ---
 
+## Architecture du modèle (GNN)
+
+L’encodeur de graphes utilisé dans ce projet est un GNN basé sur **GIN** (Graph Isomorphism Network), implémenté avec **3 couches `GINConv`** et des connexions résiduelles. L’architecture est conçue pour produire des **embeddings d’arêtes** adaptés à l’apprentissage contrastif, et un **embedding global de graphe** pour des analyses et tâches aval (retrieval, visualisation).
+
+### Entrées
+
+* **Attributs de nœuds** : vecteurs de moments statistiques (moments de Hu) projetés dans un espace latent de dimension `hidden_dim` via un MLP :
+
+  * `Linear(node_dim -> hidden_dim) + LayerNorm + ReLU + Dropout`
+* **Attributs d’arêtes** : bandeaux de force (FB) encodés par un MLP dédié (`content_enc`) :
+
+  * `Linear(edge_dim -> 2*hidden_dim) + LayerNorm + ReLU + Dropout`
+  * puis `Linear(2*hidden_dim -> hidden_dim) + LayerNorm + ReLU`
+
+### Propagation sur les nœuds
+
+Trois couches successives sont appliquées :
+
+* `GINConv` + connexion résiduelle + `LayerNorm` + `ReLU`
+* répétées 3 fois, produisant des représentations de nœuds de plus en plus contextuelles (`h1`, `h2`, `h3`)
+
+Cette étape permet d’agréger l’information locale et de contextualiser les objets en fonction de leur voisinage dans le graphe.
+
+### Construction des embeddings d’arêtes
+
+Pour chaque arête (u -> v), une représentation d’arête est construite en concaténant :
+
+* l’embedding du noeud source `h3[u]`,
+* l’embedding du noeud cible `h3[v]`,
+* l’embedding de contenu de l’arête `c(e)` issu de `content_enc`.
+
+On obtient ainsi un vecteur de taille `3*hidden_dim`, transformé par un MLP de fusion (`fuse_mlp`) pour produire un **embedding d’arête** `h_e` de dimension `hidden_dim`.
+
+### Projection head (apprentissage contrastif)
+
+Comme dans SimCLR, l’embedding d’arête `h_e` est projeté dans un espace contrastif `z_e` via un **projection head** :
+
+* `Linear(hidden_dim -> hidden_dim) + ReLU + Linear(hidden_dim -> proj_dim)`
+
+La **perte contrastive InfoNCE** est calculée sur ces vecteurs `z_e`, tandis que les tâches aval utilisent `h_e` (sans projection).
+
+### Embedding global de graphe (graph-level)
+
+Un embedding global est construit en combinant :
+
+* un pooling des noeuds (`global_mean_pool` sur `h3`),
+* un pooling des arêtes (`global_mean_pool` sur `h_edges`).
+
+Les deux représentations sont moyennées, passées dans un petit MLP de readout, puis normalisées (L2) pour être utilisées en retrieval et visualisation.
+
+### Hyperparamètres principaux
+
+* `hidden_dim = 256`
+* `proj_dim = 128`
+* `dropout = 0.1`
+* Perte contrastive : **InfoNCE** avec `temperature = 0.1`
+
+
 ## Évaluation par prédiction de relations
 
 Une première évaluation est menée via une tâche de **prédiction de relations** à l’aide d’un classifieur linéaire entraîné sur des embeddings figés (linear probing).
