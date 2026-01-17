@@ -13,6 +13,7 @@ Chaque scène est modélisée comme un graphe :
 * les **arêtes** représentent les relations spatiales entre objets.
 
 Nous adoptons une approche **auto-supervisée** basée sur l’**apprentissage contrastif sur graphes (Graph Contrastive Learning, GraphCL)**.
+([You et al., 2020](https://arxiv.org/pdf/2010.13902))
 
 **Encadrants :** Camille Kurtz, Laurent Wendling, Logan Servant
 ---
