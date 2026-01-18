@@ -159,6 +159,36 @@ Une première évaluation est menée via une tâche de **prédiction de relation
 * performances faibles sur les relations rares ou sémantiques,
 * forte dégradation liée au déséquilibre des classes.
 
+#### Métriques globales (validation)
+
+- Accuracy (micro-averaged) : **0.347**
+- F1-score macro-averaged : **0.044**
+- F1-score weighted-averaged : **0.264**
+
+Ces résultats révèlent un **écart important entre les métriques macro et pondérées**, indiquant un **fort déséquilibre de classes** dans le dataset.
+
+#### Analyse par fréquence de classes
+
+| Fréquence des classes | Accuracy |
+|-----------------------|----------|
+| Très fréquentes (>1000) | 0.459 |
+| Fréquentes (500–1000)   | 0.045 |
+| Moyennes (100–500)      | 0.011 |
+| Rares (10–100)          | 0.005 |
+| Très rares (<10)        | 0.017 |
+
+#### Analyse par classe
+
+Les meilleures performances (F1-score) sont observées pour des relations **principalement directionnelles** :
+
+- *over* (F1 = 0.538)
+- *beside* (F1 = 0.453)
+- *on* (F1 = 0.408)
+
+À l’inverse, de nombreuses relations de type **action ou interaction sémantique** (*wearing*, *talking to*, *throwing*, etc.) ne sont jamais prédites.  
+Au total, **35 classes sur 56** ne sont jamais produites par le modèle.
+
+
 Les **matrices de confusion** montrent des confusions structurées entre relations géométriquement proches (par exemple *standing on* confondu avec *on*), ce qui est cohérent avec la nature directionnelle des bandeaux de force.
 
 <p align="center">
@@ -181,14 +211,13 @@ Les **matrices de confusion** montrent des confusions structurées entre relatio
   </em>
 </p>
 
-
-
 ### Limites de cette évaluation
 
 * déséquilibre extrême des classes,
 * annotations souvent peu adaptées à une modélisation purement spatiale,
 * métriques quantitatives peu représentatives de l’objectif réel du projet.
 
+Ainsi, la tâche de classification de relations apparaît **mal alignée avec la nature des représentations apprises**.
 
 ---
 
