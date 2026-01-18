@@ -63,6 +63,38 @@ Cette représentation permet de séparer explicitement :
 
 ---
 
+## Calcul préalable des bandeaux de force
+
+Les **bandeaux de force** utilisés dans ce projet ont été **calculés en amont** pour l’ensemble du dataset PSG.
+
+Chaque bandeau de force est un **descripteur de position relative continue**, calculé entre deux objets binaires segmentés à partir des masques panoptiques.  
+Il encode la distribution spatiale directionnelle d’un objet par rapport à un autre sous la forme d’une carte 2D.
+
+Au total, plus de **270 000 bandeaux de force** ont été générés.  
+Ce calcul représente un **coût computationnel important**, réparti sur plusieurs jours, et constitue une étape préalable indispensable à l’ensemble des expérimentations menées dans ce projet.
+
+Dans ce travail, les bandeaux de force sont considérés comme des **descripteurs géométriques fixes**, servant de base à l’apprentissage contrastif sur graphes.
+
+## Continuité avec des travaux antérieurs (projet de M1)
+
+Ce projet s’inscrit dans la continuité directe d’un travail réalisé lors d’un **stage de M1 VMI**, portant également sur la modélisation des relations spatiales à partir de bandeaux de force.
+
+Dans ce précédent projet, une approche de type **Bag of Spatial Relations (BoSR)** avait été explorée :
+- les bandeaux de force étaient projetés dans un espace réduit (PCA),
+- puis regroupés via **k-means** afin de définir des **clusters spatiaux**,
+- chaque scène était représentée par un **histogramme de relations spatiales**.
+
+L’apprentissage reposait alors sur une **Triplet Loss**, où les triplets étaient construits à partir d’une distance explicite entre bandeaux de force.  
+Cette formulation permettait une évaluation quantitative plus directe, notamment via des métriques de ranking telles que le **NDCG**.
+
+Le présent projet constitue une **exploration plus poussée** de cette problématique :
+- les relations spatiales sont désormais intégrées dans une **représentation structurée sous forme de graphes de scène**,
+- l’apprentissage est réalisé via des **Graph Neural Networks** et une stratégie **contrastive auto-supervisée**.
+
+Cependant, l’**évaluation quantitative est plus complexe**, en particulier pour des tâches de retrieval.
+
+---
+
 ## Méthodologie
 
 ### Apprentissage contrastif sur graphes
