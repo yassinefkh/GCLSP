@@ -179,6 +179,39 @@ Ces résultats révèlent un **écart important entre les métriques macro et po
 
 #### Analyse par classe
 
+### Top-10 relations (meilleures performances)
+
+| Rang | Relation     | Précision | Rappel | F1-score  | Support |
+| ---: | ------------ | --------- | ------ | --------- | ------- |
+|    1 | over         | 0.440     | 0.694  | **0.538** | 3834    |
+|    2 | beside       | 0.346     | 0.657  | **0.453** | 4547    |
+|    3 | on           | 0.310     | 0.597  | **0.408** | 5251    |
+|    4 | kicking      | 1.000     | 0.111  | 0.200     | 9       |
+|    5 | holding      | 0.232     | 0.148  | 0.181     | 932     |
+|    6 | standing on  | 0.262     | 0.067  | 0.107     | 1821    |
+|    7 | attached to  | 0.291     | 0.061  | 0.101     | 2179    |
+|    8 | driving on   | 0.336     | 0.055  | 0.095     | 651     |
+|    9 | about to hit | 0.150     | 0.043  | 0.067     | 70      |
+|   10 | swinging     | 0.500     | 0.034  | 0.063     | 118     |
+
+---
+
+### Bottom-10 relations (pires performances)
+
+| Rang | Relation     | Précision | Rappel | F1-score  | Support |
+| ---: | ------------ | --------- | ------ | --------- | ------- |
+|    1 | wearing      | 0.000     | 0.000  | **0.000** | 266     |
+|    2 | touching     | 0.000     | 0.000  | **0.000** | 154     |
+|    3 | throwing     | 0.000     | 0.000  | **0.000** | 29      |
+|    4 | talking to   | 0.000     | 0.000  | **0.000** | 49      |
+|    5 | slicing      | 0.000     | 0.000  | **0.000** | 11      |
+|    6 | sitting on   | 0.000     | 0.000  | **0.000** | 555     |
+|    7 | running on   | 0.000     | 0.000  | **0.000** | 138     |
+|    8 | pushing      | 0.000     | 0.000  | **0.000** | 11      |
+|    9 | pulling      | 0.000     | 0.000  | **0.000** | 33      |
+|   10 | playing with | 0.000     | 0.000  | **0.000** | 42      |
+
+
 Les meilleures performances (F1-score) sont observées pour des relations **principalement directionnelles** :
 
 - *over* (F1 = 0.538)
